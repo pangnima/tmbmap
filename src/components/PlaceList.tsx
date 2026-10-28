@@ -37,6 +37,7 @@ export default function PlaceList({ places, base, drive, votersOf, voter, title,
     const likeCount = (p: Place) => votersOf.get(p.id)?.length ?? 0
     if (sort === 'like') list.sort((a, b) => likeCount(b) - likeCount(a) || distOf(a) - distOf(b))
     else if (sort === 'distance') list.sort((a, b) => distOf(a) - distOf(b))
+    else list.sort((a, b) => b.created_at.localeCompare(a.created_at))
     return list
     // distOf는 base·drive에서 파생
     // oxlint-disable-next-line react-hooks/exhaustive-deps
@@ -46,7 +47,7 @@ export default function PlaceList({ places, base, drive, votersOf, voter, title,
   const sorts: [Sort, string][] = [
     ['like', '추천순'],
     ...(base ? [['distance', '가까운 순'] as [Sort, string]] : []),
-    ['recent', '등록순'],
+    ['recent', '최신등록순'],
   ]
 
   return (
